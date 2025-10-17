@@ -1,72 +1,92 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import About from './pages/About';
-import Schedule from './pages/Schedule';
-import RSVP from './pages/RSVP';
-import Gallery from './pages/Gallery';
-import FAQ from './pages/FAQ';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cat Dating</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fff5f5; color: #333; }
+  header { background-color: #ff6f61; padding: 20px; color: #fff; text-align: center; }
+  h1 { margin: 0; }
+  section { padding: 20px; max-width: 800px; margin: auto; }
+  label { display: block; margin: 10px 0 5px; }
+  input, select, button { padding: 8px; margin-bottom: 15px; width: 100%; border-radius: 5px; border: 1px solid #ccc; }
+  .matches { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+  .card { background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+  .card img { width: 100%; border-radius: 10px; }
+</style>
+</head>
+<body>
 
+<header>
+  <h1>🐱 Cat Dating App</h1>
+  <p>Find the purr-fect match for your cat!</p>
+</header>
 
-export default function App() {
-const [menuOpen, setMenuOpen] = useState(false);
+<section>
+  <h2>Create Your Cat Profile</h2>
+  <form id="catForm">
+    <label for="name">Cat Name:</label>
+    <input type="text" id="name" required>
 
+    <label for="age">Age:</label>
+    <input type="number" id="age" min="0" required>
 
-function toggleMenu() {
-if (!menuOpen) {
-const audio = new Audio('/sounds/meow.mp3');
-audio.play();
-}
-setMenuOpen(!menuOpen);
-}
+    <label for="activity">Favorite Activity:</label>
+    <select id="activity">
+      <option>Sleeping</option>
+      <option>Playing</option>
+      <option>Eating</option>
+      <option>Exploring</option>
+    </select>
 
+    <label for="personality">Personality:</label>
+    <select id="personality">
+      <option>Playful</option>
+      <option>Shy</option>
+      <option>Cuddly</option>
+      <option>Adventurous</option>
+    </select>
 
-return (
-<Router>
-<div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50 text-gray-800 relative">
-<Header toggleMenu={toggleMenu} />
+    <button type="submit">Find Matches</button>
+  </form>
 
+  <div id="matches" class="matches"></div>
+</section>
 
-{/* Slide-in menu */}
-<motion.div
-initial={{ x: '-100%' }}
-animate={{ x: menuOpen ? '0%' : '-100%' }}
-transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-className="fixed top-0 left-0 w-1/2 sm:w-2/3 h-full bg-white shadow-lg z-50 p-6 flex flex-col gap-6 rounded-r-xl"
->
-<div className="flex justify-between items-center">
-<h2 className="text-2xl font-bold">🐱 Menu</h2>
-<button onClick={toggleMenu} className="text-gray-700 font-bold text-xl">✖</button>
-</div>
-<nav className="flex flex-col gap-4 text-lg">
-<a href="/" className="hover:text-indigo-600">Home</a>
-<a href="/about" className="hover:text-indigo-600">About</a>
-<a href="/schedule" className="hover:text-indigo-600">Schedule</a>
-<a href="/rsvp" className="hover:text-indigo-600">RSVP</a>
-<a href="/gallery" className="hover:text-indigo-600">Gallery</a>
-<a href="/faq" className="hover:text-indigo-600">FAQ</a>
-</nav>
-</motion.div>
+<script>
+const cats = [
+  {name: 'Whiskers', age: 2, activity: 'Playing', personality: 'Playful', img: 'https://images.unsplash.com/photo-1600607686246-36f1a66e7ccf?auto=format&fit=crop&w=400&q=60'},
+  {name: 'Mittens', age: 3, activity: 'Sleeping', personality: 'Shy', img: 'https://images.unsplash.com/photo-1592194996308-7f35d5ee6f7c?auto=format&fit=crop&w=400&q=60'},
+  {name: 'Tiger', age: 1, activity: 'Exploring', personality: 'Adventurous', img: 'https://images.unsplash.com/photo-1592194996308-7f35d5ee6f7c?auto=format&fit=crop&w=400&q=60'},
+  {name: 'Luna', age: 4, activity: 'Eating', personality: 'Cuddly', img: 'https://images.unsplash.com/photo-1592194996308-7f35d5ee6f7c?auto=format&fit=crop&w=400&q=60'},
+];
 
+const form = document.getElementById('catForm');
+const matchesDiv = document.getElementById('matches');
 
-{menuOpen && <div onClick={toggleMenu} className="fixed inset-0 bg-black/30 z-40"></div>}
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const age = parseInt(document.getElementById('age').value);
+  const activity = document.getElementById('activity').value;
+  const personality = document.getElementById('personality').value;
 
+  // Simple matching: match cats with same activity or personality
+  const matches = cats.filter(cat => cat.activity === activity || cat.personality === personality);
 
-<main className="flex-1 max-w-6xl mx-auto p-4 sm:p-6 w-full">
-<Routes>
-<Route path="/" element={<Home />} />
-<Route path="/about" element={<About />} />
-<Route path="/schedule" element={<Schedule />} />
-<Route path="/rsvp" element={<RSVP />} />
-<Route path="/gallery" element={<Gallery />} />
-<Route path="/faq" element={<FAQ />} />
-</Routes>
-</main>
-<Footer />
-</div>
-</Router>
-);
-}
+  matchesDiv.innerHTML = '<h3>Matches for ' + name + ':</h3>' + 
+    matches.map(cat => `
+      <div class="card">
+        <img src="${cat.img}" alt="${cat.name}">
+        <h4>${cat.name}</h4>
+        <p>Age: ${cat.age}</p>
+        <p>Activity: ${cat.activity}</p>
+        <p>Personality: ${cat.personality}</p>
+      </div>
+    `).join('');
+});
+</script>
+
+</body>
+</html>
