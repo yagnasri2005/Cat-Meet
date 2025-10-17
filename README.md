@@ -3,5 +3,6 @@ Here the cats can find their partners based on their interest and also based on 
 
 <img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/f2ac4a01-6560-458c-972a-f4d4824b0d13" />
 
-
 <img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/3ec73f3d-fc07-446a-9727-084afb694d55" />
+
+<img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/c6a86a34-cb0d-4a3a-8176-bf4fd62452a1" />
